@@ -75,4 +75,9 @@ build/app/outputs/flutter-apk/app-release.apk
 
 ## Screenshots
 
-Place final app screenshots in the `screenshots/` folder before submitting the GitHub repository.
+Generated screenshots are included in the `screenshots/` folder:
+
+- `screenshots/login_screen.png`
+- `screenshots/register_screen.png`
+- `screenshots/add_task_screen.png`
+- `screenshots/task_item.png`
