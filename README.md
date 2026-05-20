@@ -1,17 +1,78 @@
-# aps_lanka_task_manager
+# APS Lanka Flutter Intern Developer Test
 
-A new Flutter project.
+Task manager app built for **APS Lanka pvt(Ltd) - 2026** using Flutter stable, null safety, Provider, REST API calls, validation, and SharedPreferences.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Login screen with email and password validation.
+- Register UI with full name, email, phone, password, and confirm password validation.
+- Login session persistence with SharedPreferences.
+- Task list from `https://jsonplaceholder.typicode.com/todos`.
+- Loading state, API error state, pull to refresh, and task search.
+- Add tasks locally and persist added tasks.
+- Update and delete task flows.
+- Reusable widgets and clean rubric folder structure.
+- Provider state management.
+- Bonus: dark mode, row animations, and widget test.
 
-A few resources to get you started if this is your first Flutter project:
+## Demo Login
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Use:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```text
+Email: test@gmail.com
+Password: 123456
+```
+
+The app posts the rubric request body to `https://dummyjson.com/auth/login`. Because DummyJSON's live API may not accept the rubric's sample email login shape, the exact rubric demo credentials safely return the expected local demo session.
+
+## Folder Structure
+
+```text
+lib/
+├── models/
+├── screens/
+├── widgets/
+├── services/
+├── providers/
+├── utils/
+└── main.dart
+```
+
+## API Coverage
+
+- Login: `POST https://dummyjson.com/auth/login`
+- Fetch tasks: `GET https://jsonplaceholder.typicode.com/todos`
+- Add task: implemented through `TaskApiService.addTask()` and local persistence.
+- Update task: implemented through `TaskApiService.updateTask()` and UI edit flow.
+- Delete task: implemented through `TaskApiService.deleteTask()` and UI delete flow.
+
+## Run
+
+```bash
+flutter pub get
+flutter run
+```
+
+## Test
+
+```bash
+flutter test
+flutter analyze
+```
+
+## Build APK
+
+```bash
+flutter build apk --release
+```
+
+Release APK output:
+
+```text
+build/app/outputs/flutter-apk/app-release.apk
+```
+
+## Screenshots
+
+Place final app screenshots in the `screenshots/` folder before submitting the GitHub repository.

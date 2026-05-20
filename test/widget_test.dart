@@ -1,30 +1,47 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:aps_lanka_task_manager/providers/auth_provider.dart';
+import 'package:aps_lanka_task_manager/providers/task_provider.dart';
+import 'package:aps_lanka_task_manager/providers/theme_provider.dart';
+import 'package:aps_lanka_task_manager/screens/login_screen.dart';
+import 'package:aps_lanka_task_manager/services/auth_service.dart';
+import 'package:aps_lanka_task_manager/services/local_storage_service.dart';
+import 'package:aps_lanka_task_manager/services/task_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:aps_lanka_task_manager/main.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('login screen shows required fields', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final storageService = LocalStorageService();
+    await storageService.init();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => AuthProvider(
+              authService: AuthService(),
+              storageService: storageService,
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => TaskProvider(
+              taskApiService: TaskApiService(),
+              storageService: storageService,
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ThemeProvider(storageService: storageService),
+          ),
+        ],
+        child: const MaterialApp(home: LoginScreen()),
+      ),
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Welcome back'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
+    expect(find.text('Login'), findsOneWidget);
   });
 }
